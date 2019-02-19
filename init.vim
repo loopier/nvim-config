@@ -10,6 +10,12 @@ Plug 'rakr/vim-one'
 Plug 'https://tpope.io/vim/surround.git'
 " Commentary
 Plug 'https://tpope.io/vim/commentary.git'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+
+" Optional:
+Plug 'honza/vim-snippets'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -62,7 +68,6 @@ catch
 endtry
 
 " Supercollider
-let g:sclangTerm='open Terminal $SHELL -ic'
 let g:scFlash=1
 
 " Key maps
@@ -78,6 +83,10 @@ nmap <C-H> <C-W>h
 nmap <C-J> <C-W>j
 nmap <C-K> <C-W>k
 nmap <C-L> <C-W>l
+" Pairinig
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
 
 " Compile and run C++
 autocmd filetype h nnoremap <C-Space> :w <bar> exec 'make Debug && make RunDebug'<CR>
