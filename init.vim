@@ -66,7 +66,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
   endif
 " endif
 
-" au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
+au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
 " au Filetype supercollider packadd scvim
 
 " augroup ProjectDrawer
@@ -94,16 +94,19 @@ nmap <C-J> <C-W>j
 nmap <C-K> <C-W>k
 nmap <C-L> <C-W>l
 " Pairinig
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap {<CR> {<CR><CR>}<up><tab>
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ` ``<left>
+inoremap (( ()<left>
+inoremap [[ []<left>
+inoremap {{ {<CR><CR>}<up><tab>
+inoremap {} {}<left>
+inoremap "" ""<left>
+inoremap '' ''<left>
+inoremap `` ``<left>
 " Instert after next closing pair
 inoremap <C-Space> <esc>/)\\|]\\|}\\|"\\|'\\|`<enter>:noh<enter>a
 
 " Supercollider
+autocmd filetype supercollider imap <C-Q> <F12>
+autocmd filetype supercollider nmap <C-Q> <F12>
 " autocmd filetype supercollider nmap <C-P> <F5>
 " autocmd filetype supercollider nmap <C-Space> <F6>
 " autocmd filetype supercollider nmap { {}
