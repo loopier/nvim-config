@@ -3,16 +3,21 @@ call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
 " Plug 'tpope/vim-sensible'
-Plug 'https://github.com/supercollider/scvim.git'
-Plug 'https://github.com/gregsexton/Atom.git'
+" Plug 'https://github.com/supercollider/scvim.git'
+Plug 'davidgranstrom/scnvim'
+" Plug 'https://github.com/gregsexton/Atom.git'
 Plug 'rakr/vim-one'
+Plug 'sonph/onehalf'
 " Surround
 Plug 'https://tpope.io/vim/surround.git'
 " Commentary
 Plug 'https://tpope.io/vim/commentary.git'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
+" Plug 'garbas/vim-snipmate'
+Plug 'sophacles/vim-processing'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'SirVer/ultisnips'
 
 " Optional:
 Plug 'honza/vim-snippets'
@@ -23,7 +28,9 @@ call plug#end()
 set number
 set relativenumber
 set runtimepath+=~/.vim_runtime
-colorscheme one-dark
+colorscheme one
+" colorscheme onehalflight
+" let g:airline_theme='onehalfdark'
 " highlight Normal ctermbg=234
 " set background=dark
 set cursorline
@@ -34,9 +41,14 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'scnvim-data']
+" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 " File explorer 'netrw'
-let g:netrw_browse_split = 1
-let g:netrw_winsize = 25
+" let g:netrw_browse_split = 1
+" let g:netrw_winsize = 25
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -54,13 +66,13 @@ let g:netrw_winsize = 25
   endif
 " endif
 
-au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
-au Filetype supercollider packadd scvim
+" au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
+" au Filetype supercollider packadd scvim
 
-augroup ProjectDrawer
-    autocmd!
-    autocmd VimEnter * :Vexplore
-augroup END
+" augroup ProjectDrawer
+"     autocmd!
+"     autocmd VimEnter * :Vexplore
+" augroup END
 
 try
 source ~/.vim_runtime/my_configs.vim
@@ -68,7 +80,7 @@ catch
 endtry
 
 " Supercollider
-let g:scFlash=1
+" let g:scFlash=1
 
 " Key maps
 " Save file
@@ -76,8 +88,6 @@ map <C-S> :w<CR>
 " Move around buffers
 nmap <C-N> :bn<CR>
 nmap <C-P> :bN<CR>
-autocmd filetype supercollider nmap <C-P> <F5>
-autocmd filetype supercollider nmap <C-Space> <F6>
 " Move around windows (splits)
 nmap <C-H> <C-W>h
 nmap <C-J> <C-W>j
@@ -86,8 +96,21 @@ nmap <C-L> <C-W>l
 " Pairinig
 inoremap ( ()<left>
 inoremap [ []<left>
-inoremap { {}<left>
+inoremap {<CR> {<CR><CR>}<up><tab>
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ` ``<left>
+" Instert after next closing pair
+inoremap <C-Space> <esc>/)\\|]\\|}\\|"\\|'\\|`<enter>:noh<enter>a
+
+" Supercollider
+" autocmd filetype supercollider nmap <C-P> <F5>
+" autocmd filetype supercollider nmap <C-Space> <F6>
+" autocmd filetype supercollider nmap { {}
 
 " Compile and run C++
 autocmd filetype h nnoremap <C-Space> :w <bar> exec 'make Debug && make RunDebug'<CR>
 autocmd filetype cpp nnoremap <C-Space> :w <bar> exec 'make Debug && make RunDebug'<CR>
+
+" Compile and run Processing
+autocmd filetype processing nnoremap <C-Space> :w <bar> :make<CR>
